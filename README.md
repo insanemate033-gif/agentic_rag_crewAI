@@ -59,7 +59,6 @@ This project requires API keys for accessing external services. These keys shoul
 
 Create a file named `.env` and add your keys as follows:
 
-```ini
 OPENAI_API_KEY="sk-proj-YOUR_OPENAI_API_KEY"
 SERPER_API_KEY="YOUR_SERPER_API_KEY"
 FIRECRAWL_API_KEY="YOUR_FIRECRAWL_API_KEY"
