@@ -32,9 +32,7 @@ The system employs a sequential multi-agent architecture to process user queries
 5.  **Answer Grader Agent:** Evaluates the usefulness of the final answer. If the answer is not relevant, it can trigger another web search as a fallback.
 6.  **Response Synthesizer Agent:** Synthesizes the final, verified information into a concise and coherent response for the user.
 
-[YOUR_ARCHITECTURE_DIAGRAM_IMAGE_LINK_HERE]
-
-**Note:** Please replace `[YOUR_ARCHITECTURE_DIAGRAM_IMAGE_LINK_HERE]` with the direct URL to your architecture diagram image after uploading it (e.g., to GitHub Issues, Imgur, etc.).
+[![architecture](https://github.com/user-attachments/assets/4e70c9c9-6aed-4a4b-89b4-862f5fbb4cd0)]
 
 ## Tech Stack
 
@@ -58,14 +56,14 @@ The system employs a sequential multi-agent architecture to process user queries
 This project requires API keys for accessing external services. These keys should be stored in a `.env` file at the root of your project directory (`/Users/avinashgohite/Desktop/agentic_RAG/.env`).
 
 Create a file named `.env` and add your keys as follows:
-'''ini 
+```ini  
 OPENAI_API_KEY="sk-proj-YOUR_OPENAI_API_KEY"
 SERPER_API_KEY="YOUR_SERPER_API_KEY"
 FIRECRAWL_API_KEY="YOUR_FIRECRAWL_API_KEY"
 TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
 GROQ_API_KEY="YOUR_GROQ_API_KEY"
 MODEL=gpt-4o
-
+ ```
 ## API Key Sources
 
 **Where to get your API Keys:**
