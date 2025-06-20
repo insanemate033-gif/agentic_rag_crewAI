@@ -8,17 +8,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Soft Teal Accent. A calming and professional color scheme using off-white, slate grays, and a muted teal for interactive elements to create a harmonious and focused user experience. -->
+    <!-- Application Structure Plan: A single-page dashboard layout is used instead of a linear document to provide a high-level overview while allowing users to interactively drill down into details. The core sections are: Hero (intro), Features (cards), an interactive Architecture Diagram (the centerpiece), Tech Stack (visual badges), and Setup/Troubleshooting (collapsible accordions). This non-linear structure prioritizes user engagement and understanding by transforming a static README into an explorable application, which is more effective for showcasing a complex project's architecture and setup process. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Architecture Flow (6-step agent list) -> Goal: Organize/Flow -> Viz Method: Interactive HTML/CSS Diagram with JS click-to-reveal sections -> Justification: Far more engaging and informative than a static list or image. Allows users to explore agent details without leaving the context of the overall flow. Library: Vanilla JS.
+        - Report Info: Features List -> Goal: Inform/Summarize -> Viz Method: Styled Cards with icons -> Justification: Visually breaks up feature descriptions, making them easier to scan and digest.
+        - Report Info: Setup/Installation Steps -> Goal: Instruct -> Viz Method: Accordion Component -> Justification: Condenses a large amount of text into a manageable format, preventing overwhelming the user. Users can expand only the sections they need. Library: Vanilla JS.
+        - Report Info: Troubleshooting List -> Goal: Solve Problems -> Viz Method: Accordion Component -> Justification: Same as setup guide; provides quick access to solutions for specific problems without cluttering the UI. Library: Vanilla JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(to bottom, #f1f5f9, #e0f2f1);
-            color: #1e293b;
+            background: linear-gradient(to bottom, #f1f5f9, #e0f2f1); /* Light gradient background */
+            color: #1e293b; /* Dark slate for primary text */
         }
         h1, h2, h3, h4 {
-            color: #0f172a;
+            color: #0f172a; /* Even darker slate for headings */
         }
         .highlight-text {
-            background: linear-gradient(to right, #14b8a6, #2dd4bf);
+            background: linear-gradient(to right, #14b8a6, #2dd4bf); /* Teal gradient for highlight */
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -27,8 +36,8 @@
         .section-card {
             background-color: white;
             border-radius: 0.75rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0; /* Light slate border */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
         }
         .section-card:hover {
@@ -47,23 +56,25 @@
             transform: rotate(180deg);
         }
         .group.open .accordion-content {
-            max-height: 1000px;
+            max-height: 1000px; /* Adjust as needed */
         }
         .architecture-step {
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            /* Default text color for architecture steps */
+            color: #1e293b; 
         }
         .architecture-step:hover {
-            border-color: #14b8a6;
+            border-color: #14b8a6; /* Teal on hover */
             box-shadow: 0 0 10px rgba(20, 184, 166, 0.2);
         }
         .architecture-step.active {
-            border-color: #14b8a6;
+            border-color: #14b8a6; /* Active teal border */
             transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
         .architecture-arrow {
-            color: #94a3b8;
+            color: #94a3b8; /* slate-400 */
         }
         .architecture-detail {
             max-height: 0;
@@ -72,9 +83,13 @@
             padding-top: 0;
             padding-bottom: 0;
             opacity: 0;
+            background-color: #f8fafc; /* Lighter background for details */
+            border: 1px solid #e2e8f0; /* Light border for details */
+            border-radius: 0.5rem;
+            color: #334155; /* Darker text for details */
         }
         .architecture-detail.open {
-            max-height: 500px;
+            max-height: 500px; /* Adjust as needed */
             padding-top: 1rem;
             padding-bottom: 1rem;
             opacity: 1;
@@ -83,7 +98,7 @@
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            background-color: #0f766e;
+            background-color: #0f766e; /* Darker teal for copy button */
             color: white;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
@@ -96,94 +111,378 @@
             opacity: 1;
         }
         pre {
-            background-color: #0f172a !important;
-            color: #f8fafc;
+            background-color: #0f172a !important; /* Very dark background for code */
+            color: #f8fafc; /* White text for code */
             border-radius: 0.5rem;
+            padding: 1rem;
+            position: relative; /* For copy button positioning */
+            overflow-x: auto;
         }
         .accent-box {
-            background-color: #ccfbf1;
-            color: #0f766e;
-            border: 1px solid #2dd4bf;
+            background-color: #ccfbf1; /* Light teal background */
+            color: #0f766e; /* Dark teal text */
+            border: 1px solid #2dd4bf; /* Teal border */
             border-radius: 0.5rem;
             padding: 1rem;
             margin-top: 1rem;
         }
+        /* Styling for the architecture image */
+        .architecture-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="antialiased">
-  <div class="container mx-auto p-4 md:p-8 max-w-7xl">
-    <header class="text-center py-12 md:py-20 bg-white rounded-xl shadow-lg">
-      <h1 class="text-5xl md:text-6xl font-extrabold highlight-text">Agentic RAG with CrewAI & OpenAI</h1>
-      <p class="mt-6 text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto">An advanced multi-agent system combining local PDFs and real-time web to answer complex queries effectively.</p>
-      <a href="https://github.com/insanemate033-gif/agentic_rag_crewAI" target="_blank" rel="noopener noreferrer" class="mt-10 inline-block bg-accent-color text-white font-bold py-3 px-8 rounded-xl shadow-xl hover:bg-teal-600 transition duration-300">
-        View on GitHub
-      </a>
-    </header>
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
 
-    <!-- Keep remaining <main> and sections unchanged structurally, but feel free to apply highlight-text to titles, use section-card hover effects, and use accent-box for important notices or troubleshooting hints. -->
-  </div>
+        <!-- Header Section -->
+        <header class="text-center py-12 md:py-20 bg-white rounded-xl shadow-lg">
+            <h1 class="text-5xl md:text-6xl font-extrabold highlight-text">Agentic RAG with CrewAI & OpenAI</h1>
+            <p class="mt-6 text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto">An advanced multi-agent system combining local PDFs and real-time web to answer complex queries effectively.</p>
+            <a href="https://github.com/insanemate033-gif/agentic_rag_crewAI" target="_blank" rel="noopener noreferrer" class="mt-10 inline-block bg-teal-500 text-white font-bold py-3 px-8 rounded-xl shadow-xl hover:bg-teal-600 transition duration-300">
+                View on GitHub
+            </a>
+        </header>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const accordionToggles = document.querySelectorAll('.accordion-toggle');
-      accordionToggles.forEach(button => {
-        button.addEventListener('click', () => {
-          const group = button.closest('.group');
-          group.classList.toggle('open');
+        <main class="space-y-16 md:space-y-24">
+
+            <!-- Features Section -->
+            <section id="features">
+                <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">Key Features</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="section-card p-6 flex flex-col items-center text-center">
+                        <div class="bg-teal-100 p-3 rounded-full mb-4">
+                            <span class="text-3xl accent-color">🤖</span> <!-- Robot emoji -->
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Agentic Workflow</h3>
+                        <p class="text-slate-600">Orchestrates multiple specialized AI agents for complex reasoning, from routing queries to synthesizing final answers.</p>
+                    </div>
+                    <!-- Feature Card 2 -->
+                    <div class="section-card p-6 flex flex-col items-center text-center">
+                        <div class="bg-teal-100 p-3 rounded-full mb-4">
+                            <span class="text-3xl accent-color">📚</span> <!-- Books emoji -->
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Dual-Source RAG</h3>
+                        <p class="text-slate-600">Answers queries using both a private, local PDF knowledge base and real-time web search capabilities for comprehensive results.</p>
+                    </div>
+                    <!-- Feature Card 3 -->
+                    <div class="section-card p-6 flex flex-col items-center text-center">
+                        <div class="bg-teal-100 p-3 rounded-full mb-4">
+                            <span class="text-3xl accent-color">💬</span> <!-- Speech bubble emoji -->
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-slate-800">Interactive UI</h3>
+                        <p class="text-slate-600">A user-friendly chat interface built with Streamlit allows for easy interaction, including PDF uploads and conversation history.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture">
+                <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">Project Architecture & Flow</h2>
+                <div class="flex justify-center">
+                    <!-- Architecture Image -->
+                    <img src="https://github.com/user-attachments/assets/4e70c9c9-6aed-4a4b-89b4-862f5fbb4cd0" alt="Agentic RAG Architecture Flow" class="architecture-image">
+                </div>
+                <div id="architecture-diagram" class="section-card p-6 md:p-8">
+                    <p class="text-center text-slate-600 mb-8">Click on each step to reveal details about the agent's role and goal.</p>
+                    <div class="flex flex-col items-center space-y-4">
+                        <!-- Step 1: Router Agent -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-1">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">1</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Router Agent</h3>
+                            </div>
+                        </div>
+                        <div class="architecture-arrow text-3xl">↓</div>
+                        <!-- Step 2: Retriever Agent -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-2">
+                             <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">2</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Retriever Agent</h3>
+                            </div>
+                        </div>
+                        <div class="architecture-arrow text-3xl">↓</div>
+                        <!-- Step 3: Grader Agent -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-3">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">3</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Grader Agent</h3>
+                            </div>
+                        </div>
+                        <div class="architecture-arrow text-3xl">↓</div>
+                        <!-- Step 4: Hallucination Grader -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-4">
+                             <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">4</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Hallucination Grader</h3>
+                            </div>
+                        </div>
+                        <div class="architecture-arrow text-3xl">↓</div>
+                         <!-- Step 5: Answer Grader -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-5">
+                             <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">5</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Answer Grader</h3>
+                            </div>
+                        </div>
+                        <div class="architecture-arrow text-3xl">↓</div>
+                        <!-- Step 6: Response Synthesizer -->
+                        <div class="architecture-step w-full max-w-2xl p-4 section-card rounded-lg cursor-pointer shadow-sm hover:shadow-lg" data-target="detail-6">
+                             <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 bg-teal-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">6</div>
+                                <h3 class="font-semibold text-lg text-slate-800">Response Synthesizer</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Details Pane - This holds the content that will be revealed -->
+                    <div id="architecture-details-pane" class="mt-8 space-y-4">
+                        <!-- Detail 1: Router Agent Details -->
+                        <div id="detail-1" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Router Agent</h4>
+                           <p class="mt-2 text-slate-600">Analyzes the incoming user query and decides whether to route it to the internal vectorstore (for PDF knowledge) or to a web search.</p>
+                        </div>
+                        <!-- Detail 2: Retriever Agent Details -->
+                        <div id="detail-2" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Retriever Agent</h4>
+                           <p class="mt-2 text-slate-600">Based on the router's decision, it uses either the `DocumentSearchTool` (for PDF) or the `SerperDevTool` (for web search) to retrieve relevant information. If a relevant URL is found via Serper, it can optionally use `FireCrawlWebSearchTool` to scrape detailed content from that URL.</p>
+                        </div>
+                         <!-- Detail 3: Grader Agent Details -->
+                         <div id="detail-3" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Grader Agent</h4>
+                           <p class="mt-2 text-slate-600">Assesses the relevance of the retrieved content to the original question.</p>
+                        </div>
+                         <!-- Detail 4: Hallucination Grader Details -->
+                         <div id="detail-4" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Hallucination Grader</h4>
+                           <p class="mt-2 text-slate-600">Checks if the answer generated from the retrieved content is grounded in the facts and aligns with the question, filtering out potential hallucinations.</p>
+                        </div>
+                        <!-- Detail 5: Answer Grader Details -->
+                        <div id="detail-5" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Answer Grader</h4>
+                           <p class="mt-2 text-slate-600">Evaluates the usefulness of the final answer. If the answer is not relevant, it can trigger another web search as a fallback.</p>
+                        </div>
+                        <!-- Detail 6: Response Synthesizer Details -->
+                        <div id="detail-6" class="architecture-detail bg-slate-50 rounded-lg p-4 border border-slate-200">
+                           <h4 class="font-bold text-slate-700">Role: Response Synthesizer Agent</h4>
+                           <p class="mt-2 text-slate-600">Synthesizes the final, verified information into a concise and coherent response for the user.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tech Stack Section -->
+            <section id="tech-stack">
+                 <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">Technology Stack</h2>
+                 <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Python</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Streamlit</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">CrewAI</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">LangChain</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">OpenAI (gpt-4o)</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Serper</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Firecrawl</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Qdrant</span>
+                        <span class="bg-slate-200 text-slate-700 text-sm font-medium me-2 px-3 py-1 rounded-full">Sentence Transformers</span>
+                    </div>
+                 </div>
+            </section>
+
+            <!-- Setup and Troubleshooting Section -->
+            <section id="setup">
+                <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">Setup & Troubleshooting</h2>
+                <div class="max-w-4xl mx-auto space-y-4" id="accordion-container">
+                    <!-- Accordion Item 1: API Keys & Environment Setup -->
+                    <div class="group section-card p-1">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-slate-800">
+                            <span>Step 1: API Keys & Environment Setup</span>
+                            <svg class="w-6 h-6 arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-5 pb-5">
+                            <p class="mb-4 text-slate-600">Create a file named <code>.env</code> in the project root and populate it with your API keys. You can get them from the links below:</p>
+                             <div class="relative">
+                                <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-ini">OPENAI_API_KEY="sk-proj-YOUR_OPENAI_API_KEY"
+SERPER_API_KEY="YOUR_SERPER_API_KEY"
+FIRECRAWL_API_KEY="YOUR_FIRECRAWL_API_KEY"
+TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
+GROQ_API_KEY="YOUR_GROQ_API_KEY"
+MODEL=gpt-4o
+</code></pre>
+                            </div>
+                            <ul class="list-disc list-inside mt-4 space-y-2 text-slate-600">
+                                <li><a href="https://platform.openai.com/account/api-keys" target="_blank" class="text-teal-600 hover:underline">OpenAI API Key</a></li>
+                                <li><a href="https://serper.dev/api-key" target="_blank" class="text-teal-600 hover:underline">Serper API Key</a></li>
+                                <li><a href="https://www.firecrawl.dev/api-keys" target="_blank" class="text-teal-600 hover:underline">Firecrawl API Key</a></li>
+                                <li><a href="https://app.tavily.com/home" target="_blank" class="text-teal-600 hover:underline">Tavily API Key</a></li>
+                                <li><a href="https://console.groq.com/keys" target="_blank" class="text-teal-600 hover:underline">Groq API Key</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Accordion Item 2: Installation Guide -->
+                    <div class="group section-card p-1">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-slate-800">
+                            <span>Step 2: Installation Guide</span>
+                            <svg class="w-6 h-6 arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-5 pb-5">
+                            <ol class="list-decimal list-inside space-y-4 text-slate-600">
+                                <li>
+                                    <strong>Clone the repository:</strong>
+                                    <div class="relative mt-2">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-bash">git clone https://github.com/insanemate033-gif/agentic_rag_crewAI.git
+cd agentic_rag_crewAI</code></pre>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Create and activate a virtual environment:</strong>
+                                    <div class="relative mt-2">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-bash"># Create the environment
+python3 -m venv .venv
+
+# Activate it (macOS/Linux)
+source .venv/bin/activate</code></pre>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Install dependencies:</strong> Create a <code>requirements.txt</code> file with the content below, then run the install command.
+                                    <div class="relative mt-2">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-text"># requirements.txt
+streamlit
+crewai
+crewai-tools
+langchain-openai
+langchain-groq
+python-dotenv
+langchain-community
+markitdown
+chonkie
+qdrant-client
+firecrawl-py
+sentence-transformers</code></pre>
+                                    </div>
+                                     <div class="relative mt-2">
+                                    <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-bash">pip install -r requirements.txt</code></pre>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                     <!-- Accordion Item 3: How to Run the Application -->
+                    <div class="group section-card p-1">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-slate-800">
+                            <span>Step 3: How to Run the Application</span>
+                             <svg class="w-6 h-6 arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-5 pb-5">
+                            <p class="mb-4 text-slate-600">With your virtual environment active and all dependencies installed, run the Streamlit app from your project root directory:</p>
+                             <div class="relative">
+                                <pre class="bg-slate-800 text-white p-4 rounded-md overflow-x-auto"><button class="copy-btn">Copy</button><code class="language-bash">streamlit run app.py</code></pre>
+                            </div>
+                             <p class="mt-4 text-slate-600">A new tab should open in your browser with the application UI. Upload a PDF and start asking questions!</p>
+                        </div>
+                    </div>
+                    <!-- Accordion Item 4: Common Troubleshooting Tips -->
+                    <div class="group section-card p-1">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-5 font-semibold text-left text-slate-800">
+                            <span>Common Troubleshooting Tips</span>
+                             <svg class="w-6 h-6 arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 prose prose-slate max-w-none">
+                            <p>If you encounter issues, check these common points:</p>
+                            <ul>
+                                <li><strong><code>ModuleNotFoundError: No module named 'src'</code></strong>: Ensure you have empty <code>__init__.py</code> files in your <code>src/</code>, <code>src/agentic_rag/</code>, and <code>src/agentic_rag/tools/</code> directories.</li>
+                                <li><strong>API Key / `BadRequestError`</strong>: Double-check that your <code>.env</code> file is in the project root and your API keys are correct.</li>
+                                 <li><strong><code>RecursionError</code></strong>: This usually means the agent is in a loop, often caused by excessive `verbose` logging. Ensure `verbose` is set to `False` in your `app.py` for all Agent and Crew initializations.</li>
+                                <li><strong>General Issues</strong>: Always restart the Streamlit app (<code>Ctrl+C</code> in the terminal, then <code>streamlit run app.py</code>) after any code change. Make sure only your project's <code>.venv</code> is active.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-12 mt-16 border-t border-slate-200">
+            <p class="text-slate-500">Built by Avinash Gohite. Find the project on <a href="https://github.com/insanemate033-gif/agentic_rag_crewAI" target="_blank" class="text-teal-600 hover:underline font-semibold">GitHub</a>.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Accordion Logic
+            const accordionToggles = document.querySelectorAll('.accordion-toggle');
+            accordionToggles.forEach(button => {
+                button.addEventListener('click', () => {
+                    const group = button.closest('.group');
+                    group.classList.toggle('open');
+                });
+            });
+
+            // Architecture Diagram Logic
+            const steps = document.querySelectorAll('.architecture-step');
+            const allDetails = document.querySelectorAll('.architecture-detail'); // Get all detail elements once
+
+            steps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const targetId = step.dataset.target; // e.g., "detail-1"
+                    const targetDetail = document.getElementById(targetId); // Find the specific detail element
+
+                    // Check if the clicked detail is already open
+                    const isOpen = targetDetail.classList.contains('open');
+
+                    // Close all other details and deactivate their steps
+                    allDetails.forEach(detail => {
+                        detail.classList.remove('open');
+                        const correspondingStep = document.querySelector(`[data-target="${detail.id}"]`);
+                        if (correspondingStep) {
+                            correspondingStep.classList.remove('active');
+                        }
+                    });
+
+                    // If the clicked detail was NOT open, open it and activate its step
+                    if (!isOpen) {
+                        targetDetail.classList.add('open');
+                        step.classList.add('active');
+                    }
+                });
+            });
+            
+            // Copy to Clipboard Logic
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const pre = e.target.closest('pre');
+                    const code = pre.querySelector('code');
+                    const textToCopy = code.innerText;
+
+                    // Use execCommand for broader compatibility
+                    const textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                        button.innerText = 'Copied!';
+                        setTimeout(() => {
+                            button.innerText = 'Copy';
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                        button.innerText = 'Error';
+                         setTimeout(() => {
+                            button.innerText = 'Copy';
+                        }, 2000);
+                    }
+                    document.body.removeChild(textarea);
+                });
+            });
         });
-      });
-
-      const steps = document.querySelectorAll('.architecture-step');
-      const detailsPane = document.getElementById('architecture-details-pane');
-      const allDetails = detailsPane.querySelectorAll('.architecture-detail');
-      let activeStep = null;
-
-      steps.forEach(step => {
-        step.addEventListener('click', () => {
-          const targetId = step.dataset.target;
-          const targetDetail = document.getElementById(targetId);
-
-          if (activeStep === step) {
-            step.classList.remove('active');
-            targetDetail.classList.remove('open');
-            activeStep = null;
-            return;
-          }
-
-          if (activeStep) {
-            activeStep.classList.remove('active');
-          }
-          allDetails.forEach(detail => detail.classList.remove('open'));
-
-          step.classList.add('active');
-          targetDetail.classList.add('open');
-          activeStep = step;
-        });
-      });
-
-      const copyButtons = document.querySelectorAll('.copy-btn');
-      copyButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          const pre = e.target.closest('pre');
-          const code = pre.querySelector('code');
-          const textToCopy = code.innerText;
-          const textarea = document.createElement('textarea');
-          textarea.value = textToCopy;
-          document.body.appendChild(textarea);
-          textarea.select();
-          try {
-            document.execCommand('copy');
-            button.innerText = 'Copied!';
-            setTimeout(() => { button.innerText = 'Copy'; }, 2000);
-          } catch (err) {
-            console.error('Failed to copy text: ', err);
-            button.innerText = 'Error';
-            setTimeout(() => { button.innerText = 'Copy'; }, 2000);
-          }
-          document.body.removeChild(textarea);
-        });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
+
