@@ -53,12 +53,12 @@ The system employs a sequential multi-agent architecture to process user queries
 * **`sentence-transformers`:** For generating embeddings (used by `DocumentSearchTool`).
 * **`pydantic` & `rich`:** Core dependencies for data validation and rich console output (managed by CrewAI/LangChain).
 
-## API Keys & Setup
+## API Keys
 
 This project requires API keys for accessing external services. These keys should be stored in a `.env` file at the root of your project directory (`/Users/avinashgohite/Desktop/agentic_RAG/.env`).
 
 Create a file named `.env` and add your keys as follows:
-
+'''ini 
 OPENAI_API_KEY="sk-proj-YOUR_OPENAI_API_KEY"
 SERPER_API_KEY="YOUR_SERPER_API_KEY"
 FIRECRAWL_API_KEY="YOUR_FIRECRAWL_API_KEY"
@@ -66,7 +66,7 @@ TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
 GROQ_API_KEY="YOUR_GROQ_API_KEY"
 MODEL=gpt-4o
 
-## API Keys & Setup
+## API Key Sources
 
 **Where to get your API Keys:**
 * **OpenAI API Key:** Visit [OpenAI Platform](https://platform.openai.com/account/api-keys).
