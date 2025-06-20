@@ -66,3 +66,125 @@ FIRECRAWL_API_KEY="YOUR_FIRECRAWL_API_KEY"
 TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
 GROQ_API_KEY="YOUR_GROQ_API_KEY"
 MODEL=gpt-4o
+
+## API Keys & Setup
+
+**Where to get your API Keys:**
+* **OpenAI API Key:** Visit [OpenAI Platform](https://platform.openai.com/account/api-keys).
+* **Serper API Key:** Visit [Serper.dev](https://serper.dev/api-key).
+* **Firecrawl API Key:** Visit [Firecrawl.dev](https://www.firecrawl.dev/api-keys).
+* **Tavily API Key:** Visit [Tavily AI](https://app.tavily.com/home).
+* **Groq API Key:** Visit [Groq Console](https://console.groq.com/keys).
+
+## Installation & Setup
+
+Follow these steps to get the project set up on your local machine.
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/insanemate033-gif/agentic_rag_crewAI.git](https://github.com/insanemate033-gif/agentic_rag_crewAI.git)
+    cd agentic_rag_crewAI
+    ```
+
+2.  **Create a Virtual Environment:**
+    It's highly recommended to use a virtual environment to manage dependencies.
+    ```bash
+    python3 -m venv .venv
+    ```
+
+3.  **Activate the Virtual Environment:**
+    * **macOS/Linux:**
+        ```bash
+        source .venv/bin/activate
+        ```
+    * **Windows:**
+        ```bash
+        .venv\Scripts\activate
+        ```
+    Your terminal prompt should now show `(.venv)` at the beginning, indicating the virtual environment is active.
+
+4.  **Install Dependencies:**
+    First, ensure you have a `requirements.txt` file in your project root with the following content:
+
+    ```plaintext
+    # requirements.txt content
+    streamlit
+    crewai
+    crewai-tools
+    langchain-openai
+    langchain-groq
+    python-dotenv
+    langchain-community
+    markitdown
+    chonkie
+    qdrant-client
+    firecrawl-py
+    sentence-transformers
+    ```
+    Then, install them using pip:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5.  **Verify Project Structure:**
+    Ensure your project structure looks like this (crucial for imports):
+    ```
+    agentic_RAG/
+    ├── app.py
+    ├── .env
+    ├── .venv/
+    ├── assets/
+    │   └── crewai.png
+    ├── knowledge/
+    │   └── dspy.pdf # (Optional, if you have a default PDF)
+    └── src/
+        ├── __init__.py
+        └── agentic_rag/
+            ├── __init__.py
+            ├── tools/
+            │   ├── __init__.py
+            │   └── custom_tool.py
+            └── ... (other src files like crew.py, main.py, demo_llama3.2.ipynb)
+    ```
+    Ensure all `__init__.py` files are present as empty files in their respective directories.
+
+## How to Run the Application
+
+Once installed and configured:
+
+1.  **Ensure your virtual environment is activated.**
+2.  **Navigate to the project's root directory** in your terminal (where `app.py` is located).
+3.  **Run the Streamlit application:**
+    ```bash
+    streamlit run app.py
+    ```
+    This will open a new tab in your web browser with the interactive chat UI.
+
+4.  **Interact with the UI:**
+    * In the Streamlit sidebar, use "Choose a PDF file" to upload a document for RAG.
+    * Type your questions in the chat input box at the bottom. The system will use its agents and tools to provide responses.
+
+## Troubleshooting Tips
+
+* **`ModuleNotFoundError: No module named 'src.agentic_rag.tools'`**:
+    * Ensure all `__init__.py` files are present in `src/`, `src/agentic_rag/`, and `src/agentic_rag/tools/`. They must be empty files.
+    * Verify the exact spelling and casing of all directory names (`src`, `agentic_rag`, `tools`).
+* **`ImportError: cannot import name 'BaseTool' from 'crewai.tools'` (or similar for other modules)**:
+    * Ensure `src/agentic_rag/tools/custom_tool.py` has the correct `BaseTool` import: `from crewai.tools import BaseTool` (as determined during our debugging).
+    * Restart your Jupyter Kernel or terminal session after modifying any Python files.
+* **`RecursionError: maximum recursion depth exceeded`**:
+    * This often happens with excessive logging. Ensure `verbose=False` for all `Agent` and `Crew` instantiations in your `app.py`.
+    * You can temporarily increase Python's recursion limit for debugging, but it's not a permanent solution for logical loops: `import sys; sys.setrecursionlimit(5000)`.
+    * Review agent goals and tool descriptions. Ensure they provide clear instructions and escape conditions (e.g., "if information not found, respond with X"). Ambiguous goals can cause agents to loop.
+* **`BadRequestError: LLM Provider NOT provided` or API key issues**:
+    * Double-check your `.env` file for correct variable names (`OPENAI_API_KEY`, `SERPER_API_KEY`, etc.) and accurate keys.
+    * Ensure `load_dotenv()` is called early in your `app.py`.
+    * Confirm your `llm` setup in `app.py` uses `ChatOpenAI` and `os.getenv("OPENAI_API_KEY")`.
+* **General Issues**:
+    * Always **restart your Streamlit app** (Ctrl+C in terminal, then `streamlit run app.py` again) after making any code changes.
+    * Ensure your virtual environment is **active and only active** when running `streamlit run`. Conflicts with other Python environments (like Conda `(base)`) are a common cause of unexpected errors.
+
+## Repository Link
+
+This project is hosted on GitHub:
+[https://github.com/insanemate033-gif/agentic_rag_crewAI](https://github.com/insanemate033-gif/agentic_rag_crewAI)
